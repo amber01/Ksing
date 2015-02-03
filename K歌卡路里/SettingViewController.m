@@ -176,7 +176,13 @@
 #pragma mark -- UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"平台信息" message:@"你现在是用QQ平台登录的哦" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }else if (indexPath.section == 0 && indexPath.row == 1){
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"版本检测" message:@"你现在的版本为0.1.0,目前为最新版本哦" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 //表示section Header的高度
