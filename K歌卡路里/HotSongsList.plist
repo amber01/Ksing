@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>A</key>
+	<dict>
+		<key>id</key>
+		<string>1612</string>
+		<key>name</key>
+		<string>再见王子</string>
+		<key>singer</key>
+		<string>棉花糖</string>
+	</dict>
+	<key>D</key>
+	<dict>
+		<key>id</key>
+		<string>2038</string>
+		<key>name</key>
+		<string>私奔到月球</string>
+		<key>singer</key>
+		<string>五月天、陈绮贞</string>
+	</dict>
+	<key>E</key>
+	<dict>
+		<key>id</key>
+		<string>58</string>
+		<key>name</key>
+		<string>七里香</string>
+		<key>singer</key>
+		<string>周杰伦</string>
+	</dict>
+	<key>F</key>
+	<dict>
+		<key>id</key>
+		<string>637</string>
+		<key>name</key>
+		<string>甜蜜蜜</string>
+		<key>singer</key>
+		<string>邓丽君</string>
+	</dict>
+	<key>A - 6</key>
+	<dict>
+		<key>id</key>
+		<string>677</string>
+		<key>name</key>
+		<string>如果没有你</string>
+		<key>singer</key>
+		<string>莫文蔚</string>
+	</dict>
+	<key>A - 7</key>
+	<dict>
+		<key>id</key>
+		<string>700</string>
+		<key>name</key>
+		<string>我的未来不是梦</string>
+		<key>singer</key>
+		<string>张雨生</string>
+	</dict>
+</dict>
+</plist>
