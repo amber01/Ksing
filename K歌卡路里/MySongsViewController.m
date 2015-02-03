@@ -112,12 +112,14 @@
 #pragma mark -- actions
 - (void)playAction:(UIButton *)button
 {
+    
     _singOverVC = [[SingOverViewController alloc]init];
     NSString *songName = [[_root allValues]objectAtIndex:button.tag][@"songName"];
     NSString *recordName = [[_root allValues]objectAtIndex:button.tag][@"recordName"];
     NSString *recordTime = [[_root allValues]objectAtIndex:button.tag][@"recordTime"];
     NSString *songID = [[_root allValues]objectAtIndex:button.tag][@"songID"];
     NSString *singerName = [[_root allValues]objectAtIndex:button.tag][@"singerName"];
+    
     
     self.singOverVC.songID = songID;
     self.singOverVC.songsName = songName;
