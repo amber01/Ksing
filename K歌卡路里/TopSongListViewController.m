@@ -111,22 +111,26 @@
     NSString *mp3Names = [NSString stringWithFormat:@"%@_01.mp3",self.urlString];
     BOOL isFile = [TopSongListViewController isFileExist:mp3Names];
     
-    
     if (button.selected == NO && isFile == NO) {
-        
         button.selected = YES;
         [button setTitle:nil forState:UIControlStateNormal];
-        [self startDownloadMP3:button];
         
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notifShow) name:kLoadLableNotification object:nil];
-        
-        loadingLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, -1, 40, 30)];
-        loadingLabel.textColor = [UIColor orangeColor];
-        loadingLabel.text = @"0%";
-        loadingLabel.textAlignment = UITextAlignmentCenter;
-        loadingLabel.font = [UIFont systemFontOfSize:13];
-        [button addSubview:loadingLabel];
-        
+        if (loadingLabel.text == nil || [_loadProgress isEqualToString:@"100%"]) {
+            [self startDownloadMP3:button];
+            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notifShow) name:kLoadLableNotification object:nil];
+            loadingLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, -1, 40, 30)];
+            loadingLabel.textColor = [UIColor orangeColor];
+            loadingLabel.text = @"0%";
+            loadingLabel.textAlignment = UITextAlignmentCenter;
+            loadingLabel.font = [UIFont systemFontOfSize:13];
+            [button addSubview:loadingLabel];
+        }else{
+            [button setTitle:@"点歌" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:13];
+            button.selected = NO;
+            UIAlertView *titleAlert = [[UIAlertView alloc]initWithTitle:nil message:@"对不起，你还有歌曲正在下载中,请下载完后再点歌" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [titleAlert show];
+        }
         
     }else if (isFile == YES){
         [self currentTimeShow];
@@ -142,13 +146,10 @@
         [button setTitleColor:[UIColor orangeColor]forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:@"songDownloadSelectBtn.png"] forState:UIControlStateNormal];
         [kNavigationController pushViewController:singVC animated:YES];
-        //[[NSNotificationCenter defaultCenter]postNotificationName:kSendSongIDNotification object:nil];
-        
-        
         
     }else if (button.selected == YES)
     {
-        alertView = [[UIAlertView alloc]initWithTitle:nil message:@"歌曲正在下载中,是否取消点歌?" delegate:self cancelButtonTitle:@"是" otherButtonTitles:@"否", nil];
+        alertView = [[UIAlertView alloc]initWithTitle:nil message:@"歌曲正在下载中,无法取消哦" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
@@ -156,13 +157,10 @@
 - (void)notifShow
 {
     loadingLabel.text = _loadProgress;
-    //NSLog(@"%@",_loadProgress);
-    //arrayData = [NSMutableArray arrayWithObjects:_loadProgress,_songName,_singger,nil];
-    //NSLog(@"%@",arrayData);
+    NSLog(@"%@",_loadProgress);
     
     if ([loadingLabel.text isEqualToString:@"100%"]) {
         loadingLabel.text = @"演唱";
-        //NSLog(@"下载完成");
         return;
     }
 }
@@ -222,7 +220,7 @@
         //设置进度条的代理,
         [_loadRequest setDownloadProgressDelegate:self];
         //设置是是否支持断点下载
-        //[_loadRequest setAllowResumeForFileDownloads:YES];
+        [_loadRequest setAllowResumeForFileDownloads:NO];
         
         [networkQueue addOperation:_loadRequest];  //添加队列对象
         [networkQueue go];     //开始队列
@@ -234,10 +232,6 @@
         [networkQueue addOperation:_loadLRCRequest];
         [networkQueue go];
     }
-    
-    
-    //NSLog(@"%@",songFile);
-    //NSLog(@"%@",lrcFile);
 }
 
 #pragma mark -- ASIHTTPRequestDelegate
@@ -390,7 +384,6 @@
 {
     [super viewWillDisappear:YES];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    NSLog(@"视图消失");
     [_request cancel];
     [_loadRequest cancel];
     [_loadLRCRequest cancel];

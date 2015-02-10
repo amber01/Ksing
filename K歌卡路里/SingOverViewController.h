@@ -46,11 +46,13 @@
 @property (nonatomic,copy)  NSString  *songsName;        //歌曲名
 @property (nonatomic,copy)  NSString  *singerName;       //歌手名
 @property (nonatomic,copy)  NSString  *recordID;         //录音ID
+@property (nonatomic,copy)  NSString  *recordTimeValue;  //录音时间
+@property (nonatomic,copy)  NSString  *recordTime;
 @property (nonatomic,copy)  NSString  *scoreCount;       //录音得分
 @property (nonatomic,copy)  NSString  *kaclCount;        //卡路里消耗
 @property (nonatomic,copy)  NSString  *runCount;         //跑步计数
 
-
+- (void)addSongNameKey:(NSString *)songName songValue:(NSString *)songValue recordName:(NSString *)recordName recordValue:(NSString *)recordValue recordTimeKye:(NSString *)timeKey recordTimeValue:(NSString *)timeValue songIDKey:(NSString *)songIDKey songIDValue:(NSString *)songIDValue singerKey:(NSString *)singerKey singerValue:(NSString *)singerValue songListName:(NSString *)listName scoreKey:(NSString *)scoreKey scoreValue:(NSString *)scoreValue  kcalKey:(NSString *)kaclKey kcalValue:(NSString *)kcalValue runKey:(NSString *)runKey runValue:(NSString *)runValue;
 
 
 @end

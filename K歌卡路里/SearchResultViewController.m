@@ -111,13 +111,10 @@
         [button setTitleColor:[UIColor orangeColor]forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:@"songDownloadSelectBtn.png"] forState:UIControlStateNormal];
         [kNavigationController pushViewController:singVC animated:YES];
-        //[[NSNotificationCenter defaultCenter]postNotificationName:kSendSongIDNotification object:nil];
-        
-        
         
     }else if (button.selected == YES)
     {
-       UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"歌曲正在下载中,是否取消点歌?" delegate:self cancelButtonTitle:@"是" otherButtonTitles:@"否", nil];
+       UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"歌曲正在下载中,无法取消哦" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
@@ -125,6 +122,7 @@
 - (void)notifShow
 {
     loadingLabel.text = _loadProgress;
+    
     if ([loadingLabel.text isEqualToString:@"100%"]) {
         loadingLabel.text = @"演唱";
         return;

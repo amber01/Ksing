@@ -9,15 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "AppDelegate.h"
-#import "SingerSongListViewController.h"
 
-@interface SquareViewController : BaseViewController
+@interface SquareViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 {
-    AppDelegate *appDelegate;
-    SingerSongListViewController *singerListVC;
+    AppDelegate     *appDelegate;
+    UITableView     *_tableView;
 }
 
-@property (nonatomic,strong) UIView *backGroundView;
-@property (nonatomic,assign) CGFloat LXActivityHeight;
+@property (nonatomic,retain)NSArray *data;
+
 
 @end

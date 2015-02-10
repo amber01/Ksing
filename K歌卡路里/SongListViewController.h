@@ -19,9 +19,9 @@
 #import "EGORefreshTableHeaderView.h"
 #import "StarSongViewController.h"
 #import "SearchResultViewController.h"
+#import "ScrollViewPageControlModel.h"
 
-
-@interface SongListViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,SDWebImageDownloaderDelegate,EGORefreshTableHeaderDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
+@interface SongListViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,ASIHTTPRequestDelegate,SDWebImageDownloaderDelegate,EGORefreshTableHeaderDelegate,UISearchBarDelegate,UISearchDisplayDelegate,JScrollViewViewDelegate>
 {
     
     UIView          *view;

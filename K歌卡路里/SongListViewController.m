@@ -26,6 +26,12 @@
 #import "TopSongListViewController.h"
 #import "LoveSongListViewController.h"
 #import "JapanKorSongListViewController.h"
+#import "ThemeOneSongViewController.h"
+#import "ThemeTwoSongViewController.h"
+#import "ThemeThreeSongViewController.h"
+#import "ThemeFourSongViewController.h"
+#import "ThemeFiveSongViewController.h"
+
 
 #define kLoadLableNotification @"kLoadLableNotification"
 #define FileSavePath [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
@@ -204,32 +210,48 @@
 //展示ScrollView的一些视图
 - (void)showNews
 {
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 130)];
-    scrollView.backgroundColor = [UIColor clearColor];
-    //设置scroll视图显示的内容大小
-    scrollView.contentSize = CGSizeMake(ScreenWidth*5, 130);
-    scrollView.showsHorizontalScrollIndicator = NO; //指示器的状态
-    scrollView.scrollsToTop = YES;  //当滑到最底部的时候，点击状态栏时自动返回到最顶部位置
-    scrollView.pagingEnabled = YES; //出现一个翻页的效果
-    scrollView.delegate = self;
-    [naviView addSubview:scrollView];
+    ScrollViewPageControlModel *scrollViewPageview=[[ScrollViewPageControlModel alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 130)];
+    UIImageView *imageView1=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"001.png"]];
+    UIImageView *imageView2=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"002.png"]];
+    UIImageView *imageView3=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"003.png"]];
+    UIImageView *imageView4=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"004.png"]];
+    UIImageView *imageView5=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"005.png"]];
     
-    //将5张图片放到表视图中
-    float _x = 0;
-    for (int index = 0; index < 5; index ++) {
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0+_x, 0, ScreenWidth, 130)];
-        NSString *imageName = [NSString stringWithFormat:@"00%d.png",index+1];
-        imageView.image = [UIImage imageNamed:imageName];
-        
-        [scrollView addSubview:imageView];
-        _x += ScreenWidth; //表示翻页后，x坐标自动变化320的像素
-    }
+    scrollViewPageview.autoScrollDelayTime=3.0;
+    scrollViewPageview.delegate=self;
+    NSMutableArray *viewsArray=[[NSMutableArray alloc]initWithObjects:imageView1,imageView2,imageView3,imageView4,imageView5, nil];
+    [scrollViewPageview setViewsArray:viewsArray];
+    [naviView addSubview:scrollViewPageview];
+    [scrollViewPageview shouldAutoShow:YES];
     
-    //UIPageControl实现翻页页码标记
-    UIPageControl *pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, 140-44, ScreenWidth, 30)];
-    [_cell.contentView addSubview:pageControl]; //self.view就是tableView
-    pageControl.numberOfPages = 5;
-    pageControl.tag = 101;
+    /*
+     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 130)];
+     scrollView.backgroundColor = [UIColor clearColor];
+     //设置scroll视图显示的内容大小
+     scrollView.contentSize = CGSizeMake(ScreenWidth*5, 130);
+     scrollView.showsHorizontalScrollIndicator = NO; //指示器的状态
+     scrollView.scrollsToTop = YES;  //当滑到最底部的时候，点击状态栏时自动返回到最顶部位置
+     scrollView.pagingEnabled = YES; //出现一个翻页的效果
+     scrollView.delegate = self;
+     [naviView addSubview:scrollView];
+     
+     //将5张图片放到表视图中
+     float _x = 0;
+     for (int index = 0; index < 5; index ++) {
+     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0+_x, 0, ScreenWidth, 130)];
+     NSString *imageName = [NSString stringWithFormat:@"00%d.png",index+1];
+     imageView.image = [UIImage imageNamed:imageName];
+     
+     [scrollView addSubview:imageView];
+     _x += ScreenWidth; //表示翻页后，x坐标自动变化320的像素
+     }
+     
+     //UIPageControl实现翻页页码标记
+     UIPageControl *pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, 140-44, ScreenWidth, 30)];
+     [_cell.contentView addSubview:pageControl];
+     pageControl.numberOfPages = 5;
+     pageControl.tag = 101;
+     */
 }
 
 - (void)buttonView
@@ -422,7 +444,7 @@
     
     NSString *mp3Names = [NSString stringWithFormat:@"%@_01.mp3",self.songID];
     
-    //NSLog(@"%@",mp3Names);
+    NSLog(@"%@",mp3Names);
     
     BOOL isFile = [SongListViewController isFileExist:mp3Names];
     
@@ -607,6 +629,36 @@
     
     //NSLog(@"%@",songFile);
     //NSLog(@"%@",lrcFile);
+}
+
+#pragma mark -- JScrollViewViewDelegate
+- (void)didClickPage:(ScrollViewPageControlModel *)view atIndex:(NSInteger)index
+{
+    ThemeOneSongViewController *themeOneSongVC = [[ThemeOneSongViewController alloc]init];
+    ThemeTwoSongViewController *themeTwoSongVC = [[ThemeTwoSongViewController alloc]init];
+    ThemeThreeSongViewController *themeThreeVC = [[ThemeThreeSongViewController alloc]init];
+    ThemeFourSongViewController  *themeFourVC  = [[ThemeFourSongViewController alloc]init];
+    ThemeFiveSongViewController  *themeFiveVC  = [[ThemeFiveSongViewController alloc]init];
+    
+    switch (index) {
+        case 0:
+            [kNavigationController pushViewController:themeOneSongVC animated:YES];
+            break;
+        case 1:
+            [kNavigationController pushViewController:themeTwoSongVC animated:YES];
+            break;
+        case 2:
+            [kNavigationController pushViewController:themeThreeVC animated:YES];
+            break;
+        case 3:
+            [kNavigationController pushViewController:themeFourVC animated:YES];
+            break;
+        case 4:
+            [kNavigationController pushViewController:themeFiveVC animated:YES];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -- ASIHTTPRequestDelegate
@@ -943,6 +995,7 @@
                                      error:nil];
     }
 }
+
 
 //判断沙盒中是否有该文件存在
 + (BOOL)isFileExist:(NSString *)fileNames

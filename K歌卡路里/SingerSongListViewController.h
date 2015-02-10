@@ -18,7 +18,7 @@
 {
     UITableView    *_tableView;
     ASIHTTPRequest *_request;
-    SongListTableViewCell *cell;
+    //SongListTableViewCell *cell;
     NSString       *songStr;
     NSString       *lrcStr;
     UILabel        *loadingLabel;

@@ -77,7 +77,7 @@
     lrcStr  = @"http://120.27.49.100:8000/res/lrc/";
 }
 
-- (void)intDwonloadButton:(NSIndexPath *)indexPath
+- (void)intDwonloadButton:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell
 {
     UIButton *songLoadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     songLoadBtn.frame = CGRectMake(ScreenWidth - 75, 19, 64, 29);
@@ -99,7 +99,7 @@
     self.songName  = [dic objectForKey:@"name"];
     self.singerName   = [dic objectForKey:@"singer"];
     self.songID    = [dic objectForKey:@"id"];
-
+    
     NSString *mp3Names = [NSString stringWithFormat:@"%@_01.mp3",self.songID];
     BOOL isFile = [SingerSongListViewController isFileExist:mp3Names];
     
@@ -107,17 +107,22 @@
         
         button.selected = YES;
         [button setTitle:nil forState:UIControlStateNormal];
-        [self startDownloadMP3:button];
-        
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notifShow) name:kLoadLableNotification object:nil];
-        
-        loadingLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, -1, 40, 30)];
-        loadingLabel.textColor = [UIColor orangeColor];
-        loadingLabel.text = @"0%";
-        loadingLabel.textAlignment = UITextAlignmentCenter;
-        loadingLabel.font = [UIFont systemFontOfSize:13];
-        [button addSubview:loadingLabel];
-        
+        if (loadingLabel.text == nil || [_loadProgress isEqualToString:@"100%"]) {
+            [self startDownloadMP3:button];
+            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notifShow) name:kLoadLableNotification object:nil];
+            loadingLabel = [[UILabel alloc]initWithFrame:CGRectMake(12, -1, 40, 30)];
+            loadingLabel.textColor = [UIColor orangeColor];
+            loadingLabel.text = @"0%";
+            loadingLabel.textAlignment = UITextAlignmentCenter;
+            loadingLabel.font = [UIFont systemFontOfSize:13];
+            [button addSubview:loadingLabel];
+        }else{
+            [button setTitle:@"点歌" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:13];
+            button.selected = NO;
+            UIAlertView *titleAlert = [[UIAlertView alloc]initWithTitle:nil message:@"对不起，你还有歌曲正在下载中,请下载完后再点歌" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [titleAlert show];
+        }
         
     }else if (isFile == YES){
         [self currentTimeShow];
@@ -128,7 +133,8 @@
         singVC.recordName = self.recordName;
         singVC.recordTime = self.recordTime;
         singVC.recordTimeValue = self.recordTimeValue;
- 
+        
+        
         [button setTitle:@"演唱" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor orangeColor]forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:@"songDownloadSelectBtn.png"] forState:UIControlStateNormal];
@@ -136,7 +142,7 @@
         
     }else if (button.selected == YES)
     {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"歌曲正在下载中,是否取消点歌?" delegate:self cancelButtonTitle:@"是" otherButtonTitles:@"否", nil];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"歌曲正在下载中,无法取消哦" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
@@ -281,11 +287,13 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identity = @"cell";
-    cell = [tableView dequeueReusableCellWithIdentifier:identity];
+    
+    NSString *identify =  [NSString stringWithFormat:@"cell%d",indexPath.row];
+    SongListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
     if (cell == nil) {
-        cell = [[SongListTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identity];
+        cell = [[SongListTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identify];
     }
+    
     NSDictionary *dic = [self.data objectAtIndex:indexPath.row];
     self.songName  = [dic objectForKey:@"name"];
     self.singerName   = [dic objectForKey:@"singer"];
@@ -296,7 +304,7 @@
     cell.textLabel.text = self.songName;
     cell.detailTextLabel.text = self.singerName;
     
-    [self intDwonloadButton:indexPath];
+    [self intDwonloadButton:indexPath withCell:cell];
     
     return cell;
 }
@@ -311,8 +319,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-    cell.textLabel.text = @" ";
-    cell.detailTextLabel.text = @" ";
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [_request cancel];
     [_loadRequest cancel];

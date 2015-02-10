@@ -245,6 +245,8 @@
     self.singOverVC.scoreCount = scoreStr;
     self.singOverVC.kaclCount = kcalStr;
     self.singOverVC.runCount = runCount;
+    self.singOverVC.recordTime  =  self.recordTime;
+
     
     CheckError(AudioSessionRemovePropertyListenerWithUserData(kAudioSessionProperty_AudioRouteChange, audioRouteChangeListener,self),"couldn't remove a route change listener");
     [audioPlayer stop];
@@ -1897,8 +1899,6 @@ static void CheckError(OSStatus error,const char *operaton){
         runCount = @"230";
     }else if (crrentKCAL >25){
         runCount = @"300";
-    }else{
-        runCount = @"地球一周";
     }
 }
 

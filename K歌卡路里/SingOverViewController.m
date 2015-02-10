@@ -9,6 +9,7 @@
 #import "SingOverViewController.h"
 #import "MySongsViewController.h"
 
+
 @interface SingOverViewController ()
 
 @end
@@ -34,8 +35,6 @@
     [self songNameLableView];
     [self recordingLable];
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(showTimer) userInfo:nil repeats:YES];
-    NSLog(@"songID:%@",self.songID);
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -219,7 +218,8 @@
 
 - (void)saveAction
 {
-    
+    [self currentTimeShow];
+    [self addSongNameKey:@"songName" songValue:self.songsName recordName:@"recordName" recordValue:self.recordID recordTimeKye:@"recordTime" recordTimeValue:self.recordTimeValue songIDKey:@"songID" songIDValue:self.songID singerKey:@"singerName" singerValue:self.singerName songListName:self.recordTime scoreKey:self.scoreCount  scoreValue:@"scoreCount" kcalKey:@"kcalCount" kcalValue:self.kaclCount runKey:@"runCount" runValue:self.runCount ];
 }
 
 - (void)uploadingAction
@@ -302,6 +302,44 @@
  [_request startAsynchronous];
  }
  */
+
+//将录音信息添加到plist文件中
+- (void)addSongNameKey:(NSString *)songName songValue:(NSString *)songValue recordName:(NSString *)recordName recordValue:(NSString *)recordValue recordTimeKye:(NSString *)timeKey recordTimeValue:(NSString *)timeValue songIDKey:(NSString *)songIDKey songIDValue:(NSString *)songIDValue singerKey:(NSString *)singerKey singerValue:(NSString *)singerValue songListName:(NSString *)listName scoreKey:(NSString *)scoreKey scoreValue:(NSString *)scoreValue  kcalKey:(NSString *)kaclKey kcalValue:(NSString *)kcalValue runKey:(NSString *)runKey runValue:(NSString *)runValue
+{
+    NSString *dicplistpath = [appDelegate.documentDirectory stringByAppendingPathComponent:@"RecordList.plist"];
+    NSMutableDictionary *dic = [[NSMutableDictionary dictionaryWithContentsOfFile:dicplistpath]mutableCopy];
+    
+    if (dic == nil) { //如果plist为空的情况自动创建一个
+        NSMutableDictionary *rootdicplist=[[NSMutableDictionary alloc]init];
+        //定义第一个Dictionary集合
+        NSMutableDictionary *childPlist=[[NSMutableDictionary alloc]init];
+        [childPlist setObject:songValue forKey:songName];
+        [childPlist setObject:recordValue forKey:recordName];
+        [childPlist setObject:timeValue forKey:timeKey];
+        [childPlist setObject:songIDValue forKey:songIDKey];
+        [childPlist setObject:scoreValue forKey:scoreKey];
+        [childPlist setObject:kcalValue forKey:kaclKey];
+        [childPlist setObject:runValue forKey:runKey];
+        
+        //添加到根集合中
+        [rootdicplist setObject:childPlist forKey:listName];
+        //写入文件
+        [rootdicplist writeToFile:dicplistpath atomically:YES];
+    }else{
+        NSMutableDictionary *childPlist=[[NSMutableDictionary alloc]init];
+        [childPlist setObject:songValue forKey:songName];
+        [childPlist setObject:recordValue forKey:recordName];
+        [childPlist setObject:timeValue forKey:timeKey];
+        [childPlist setObject:songIDValue forKey:songIDKey];
+        [childPlist setObject:scoreKey forKey:scoreValue];
+        [childPlist setObject:kcalValue forKey:kaclKey];
+        [childPlist setObject:runValue forKey:runKey];
+        //添加到根集合中
+        [dic setObject:childPlist forKey:listName];
+        //写入文件
+        [dic writeToFile:dicplistpath atomically:YES];
+    }
+}
 
 - (void)audioPlay
 {
@@ -387,6 +425,15 @@
 {
     [super viewWillDisappear:YES];
     [[UIApplication sharedApplication]setIdleTimerDisabled:NO]; //取消屏幕保持常亮
+}
+
+- (void)currentTimeShow
+{
+    NSDateFormatter *nsdf3=[[NSDateFormatter alloc] init];
+    [nsdf3 setDateStyle:NSDateFormatterShortStyle];
+    [nsdf3 setDateFormat:@"MM-dd HH:mm"];
+    NSString *date2=[nsdf3 stringFromDate:[NSDate date]];
+    self.recordTimeValue = date2;
 }
 
 @end

@@ -30,16 +30,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    
-    self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:appKey andDelegate:self];
-    //_tencentOAuth.redirectURI = @"www.qq.com";  //这里需要填写注册APP时填写的域名。默认可以不用填写。建议不用填写。
-    self.loginUser = [[LoginUserModel alloc]init];
-    
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"SettingList" ofType:@"plist"];
-    self.dataDic = [NSDictionary dictionaryWithContentsOfFile:path];
-    self.data = [NSArray arrayWithArray:[self.dataDic allKeys]];
-    
-    //self.data = @[@"注册登录",@"分享设置",@"意见反馈",@"关于K歌卡路里"];
+    [self initTencentSDK];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,6 +61,17 @@
         UIButton *button = (UIButton *)[self.view viewWithTag:101];
         [button addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
     }
+}
+
+- (void)initTencentSDK
+{
+    self.tencentOAuth = [[TencentOAuth alloc]initWithAppId:appKey andDelegate:self];
+    //_tencentOAuth.redirectURI = @"www.qq.com";  //这里需要填写注册APP时填写的域名。默认可以不用填写。建议不用填写。
+    self.loginUser = [[LoginUserModel alloc]init];
+    
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"SettingList" ofType:@"plist"];
+    self.dataDic = [NSDictionary dictionaryWithContentsOfFile:path];
+    self.data = [NSArray arrayWithArray:[self.dataDic allKeys]];
 }
 
 #pragma mark -- HTTP
@@ -181,6 +183,11 @@
         [alertView show];
     }else if (indexPath.section == 0 && indexPath.row == 1){
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"版本检测" message:@"你现在的版本为0.1.0,目前为最新版本哦" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }else if (indexPath.section == 1 && indexPath.row == 0){
+        NSLog(@"意见反馈");
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"关于K歌卡路里" message:@"你现在的版本为0.1.0,目前为最新版本哦" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alertView show];
     }
 }
