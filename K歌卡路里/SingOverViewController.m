@@ -220,7 +220,7 @@
 {
     [self currentTimeShow];
     [self addSongNameKey:@"songName" songValue:self.songsName recordName:@"recordName" recordValue:self.recordID recordTimeKye:@"recordTime" recordTimeValue:self.recordTimeValue songIDKey:@"songID" songIDValue:self.songID singerKey:@"singerName" singerValue:self.singerName songListName:self.recordTime scoreKey:self.scoreCount  scoreValue:@"scoreCount" kcalKey:@"kcalCount" kcalValue:self.kaclCount runKey:@"runCount" runValue:self.runCount ];
-    UIAlertView *alerView = [UIAlertView alloc]initWithTitle:@"保存成功" message:@"歌曲保存成功，如果要分享" delegate:<#(id)#> cancelButtonTitle:<#(NSString *)#> otherButtonTitles:<#(NSString *), ...#>, nil;
+    //UIAlertView *alerView = [UIAlertView alloc]initWithTitle:@"保存成功" message:@"歌曲保存成功，如果要分享" delegate:<#(id)#> cancelButtonTitle:<#(NSString *)#> otherButtonTitles:<#(NSString *), ...#>, nil;
 }
 
 - (void)uploadingAction

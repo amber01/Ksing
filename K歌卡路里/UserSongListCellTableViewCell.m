@@ -32,8 +32,16 @@
     self.avatarView.layer.cornerRadius = 25;
     
     self.selectionStyle = UITableViewCellSelectionStyleNone; //选中时无颜色
-    self.backgroundColor = [UIColor clearColor];
-    self.contentView.backgroundColor = [UIColor clearColor];
+    
+    //设置cell的颜色
+    UIView* backgroundView = [ [ UIView alloc ] initWithFrame:CGRectZero  ];
+    backgroundView.backgroundColor = [ UIColor yellowColor ];
+    self.backgroundView = backgroundView;
+    
+    for ( UIView* view in self.contentView.subviews )
+    {
+        view.backgroundColor = [ UIColor clearColor ];
+    }
     
     /*
     NSString *plistPath = [[NSBundle mainBundle]pathForResource:@"SongList" ofType:@"plist"];

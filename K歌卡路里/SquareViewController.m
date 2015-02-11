@@ -48,8 +48,8 @@
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    //_tableView.backgroundColor = [UIColor redColor];
-    _tableView.backgroundColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1];
+    //_tableView.backgroundColor = [UIColor orangeColor];
+    _tableView.backgroundColor = [UIColor colorWithRed:227/255.0 green:226/255.0 blue:234/255.0 alpha:1];
     //_tableView.allowsSelection = NO;
     //_tableView.delaysContentTouches = NO;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;  //分割线隐藏
