@@ -10,6 +10,13 @@
 
 @implementation SourcePathModel
 
+/**
+ *  返回document目录
+ *
+ *  @param fileName 文件名
+ *
+ *  @return 返回文件名对应的路径
+ */
 + (NSString *)sourcePath:(NSString *)fileName
 {
     NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

@@ -154,6 +154,8 @@
             [loginBtn setBackgroundImage:[UIImage imageNamed:@"singBtn_image"] forState:UIControlStateNormal];
             [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
             loginBtn.titleLabel.font = [UIFont systemFontOfSize:17];
+            loginBtn.layer.masksToBounds = YES;
+            loginBtn.layer.cornerRadius = 3;
             [loginBtn addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
             loginBtn.tag = 101;
             [view addSubview:loginBtn];
@@ -165,6 +167,8 @@
             logoutBtn.frame = CGRectMake(20, 30, ScreenWidth - 40, 40);
             [logoutBtn setBackgroundImage:[UIImage imageNamed:@"singBtn_image"] forState:UIControlStateNormal];
             [logoutBtn setTitle:@"退出" forState:UIControlStateNormal];
+            logoutBtn.layer.masksToBounds = YES;
+            logoutBtn.layer.cornerRadius = 3;
             logoutBtn.titleLabel.font = [UIFont systemFontOfSize:17];
             [logoutBtn addTarget:self action:@selector(loginAction:) forControlEvents:UIControlEventTouchUpInside];
             logoutBtn.tag = 102;

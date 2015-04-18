@@ -1024,7 +1024,7 @@
     [nsdf2 setDateStyle:NSDateFormatterShortStyle];
     [nsdf2 setDateFormat:@"YYYYMMDDHHmmss"];
     NSString *date=[nsdf2 stringFromDate:[NSDate date]];
-    self.recordName = [NSString stringWithFormat:@"%@ID%@.aac",date,_songID];
+    self.recordName = [NSString stringWithFormat:@"%@ID%@.caf",date,_songID];
     self.recordTime = date;
     
     NSDateFormatter *nsdf3=[[NSDateFormatter alloc] init];

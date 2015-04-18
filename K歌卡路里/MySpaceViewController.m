@@ -186,6 +186,8 @@
     [singBtn setBackgroundImage:[UIImage imageNamed:@"singBtn_image"] forState:UIControlStateNormal];
     [singBtn setTitle:@"去唱歌" forState:UIControlStateNormal];
     singBtn.titleLabel.font = [UIFont systemFontOfSize:17];
+    singBtn.layer.masksToBounds = YES;
+    singBtn.layer.cornerRadius = 3;
     [singBtn addTarget:self action:@selector(singAction) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *cellBtn1 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -332,9 +334,22 @@
 
 - (void)loadImageQueueInit
 {
+    //*****************1. 通过队列多线程来异步加载图片*****************
+    /*
     NSOperationQueue *queue = [[NSOperationQueue alloc]init];
     NSInvocationOperation *op = [[NSInvocationOperation alloc]initWithTarget:self selector:@selector(downLoadImage) object:nil];
     [queue addOperation:op];
+     */
+    
+     //**********2. 通过NSObject的performSelectorInBackground多线程方法来异步请求图片**********//
+     //[self performSelectorInBackground:@selector(downLoadImage) withObject:nil];
+     
+    
+    //***************3. 通过GCD的方式创建一个新的线程来异步加载图片***************//
+    dispatch_queue_t queue = dispatch_queue_create("test", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_async(queue, ^{
+        [self downLoadImage];  //回调
+    });
 }
 
 #pragma mark -- action

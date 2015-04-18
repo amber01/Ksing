@@ -395,7 +395,7 @@
     [nsdf2 setDateStyle:NSDateFormatterShortStyle];
     [nsdf2 setDateFormat:@"YYYYMMDDHHmmss"];
     NSString *date=[nsdf2 stringFromDate:[NSDate date]];
-    self.recordName = [NSString stringWithFormat:@"%@ID%@.aac",date,self.urlString];
+    self.recordName = [NSString stringWithFormat:@"%@ID%@.caf",date,self.urlString];
     self.recordTime = date;
     NSLog(@"timer:%@",self.recordTime);
     

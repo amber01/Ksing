@@ -139,13 +139,15 @@
     return [_sectionHeadsKeys objectAtIndex:section];
 }
 
-
 #pragma mark -- ASIHTTPRequestDelegate
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     NSData *responseData = [request responseData];
     self.dicData = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
     self.data = [self.dicData objectForKey:@"detail"];
+    
+    
+    //NSLog(@"data:%@",self.data);
     
     /*
     for (int i = 0; i < self.data.count; i ++) {

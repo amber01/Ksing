@@ -12,6 +12,8 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "TencentOpenAPI/QQApiInterface.h"
 
+typedef int (^ MyBlock) (int a, int b);
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -26,6 +28,7 @@
     BaseNavigationController *rootNavigationController = [[BaseNavigationController alloc]initWithRootViewController:mainViewController];
     
     self.window.rootViewController = rootNavigationController;
+    
     
     //--------------------------------------------------
     //自定义缓存
@@ -49,6 +52,7 @@
     NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDir = [docPaths objectAtIndex:0];
     _sourcePath = [NSString stringWithFormat:@"%@/DownLoad",documentDir];
+    
     
     NSError *error = nil;
     _fileList = [[NSArray alloc] init];
@@ -77,6 +81,15 @@
         [fileManager createFileAtPath:directryPath contents:nil attributes:nil];
     }
     
+    //创建一个录音audio文件夹
+    if(![fileManager fileExistsAtPath:_filePath]){//如果不存在,则说明是第一次运行这个程序，那么建立这个文件夹
+        NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+        NSString *directryPath = [path stringByAppendingPathComponent:@"audio"];
+        [fileManager createDirectoryAtPath:directryPath withIntermediateDirectories:YES attributes:nil error:nil];
+        [fileManager createFileAtPath:directryPath contents:nil attributes:nil];
+    }
+
+    
     //在Documents目录中创建一个plist文件
     if(![fileManager fileExistsAtPath:_documentDirectory]){//如果不存在,则说明是第一次运行这个程序，那么建立这个文件夹
         NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -92,11 +105,11 @@
     }
     
     [self.window makeKeyAndVisible];
-    [self testString];
+    
+    NSLog(@"-------------------\n");
     
     return YES;
 }
-
 
 - (void)testString
 {
